@@ -4,7 +4,9 @@ RISC-V Proxy Kernel and Boot Loader
 This fork
 ---------
 Have added a syscall for allocating physical hardware addresses to virtual memory. This can be invoked by calling:
+
 syscall(337, start_of_hardware_phys_addr, len_of_addresses);
+
 This will return a uintptr_t that can be accesses.
 
 About
