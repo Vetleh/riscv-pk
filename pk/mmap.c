@@ -509,6 +509,28 @@ uintptr_t do_mprotect(uintptr_t addr, size_t length, int prot)
   return res;
 }
 
+uintptr_t map_phys_memory(uintptr_t paddr, long size)
+{
+  int prot = PROT_READ | PROT_WRITE;
+  size_t npage = (size - 1) / RISCV_PGSIZE + 1;
+  size_t megapage_size = RISCV_PGSIZE << RISCV_PGLEVEL_BITS;
+
+  uintptr_t vaddr = __vm_alloc(npage); 
+  // Syscall is long, hence the address will be
+  uintptr_t offset_paddr = ((paddr << 32) >> 32);
+
+  for (uintptr_t a = vaddr; a < vaddr + size; a += RISCV_PGSIZE)
+  {
+    pte_t* pte = __walk_create(a);
+    kassert(pte);
+    *pte = pte_create(offset_paddr >> RISCV_PGSHIFT, prot_to_type(prot, 1));
+  }
+
+  current.vm_alloc_guess = vaddr + npage * RISCV_PGSIZE;
+  
+  return vaddr;
+}
+
 static inline void __map_kernel_page(uintptr_t vaddr, uintptr_t paddr, int level, int prot)
 {
   pte_t* pte = __walk_internal(root_page_table, vaddr, 1, level);
