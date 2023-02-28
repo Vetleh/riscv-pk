@@ -5,7 +5,7 @@ This fork
 ---------
 Add a syscall for allocating physical hardware addresses to virtual memory. This can be invoked by calling:
 
-syscall(337, start_of_hardware_phys_addr, length_of_address_space);
+syscall(337, address_start, length_of_region);
 
 This creates a page table entry and returns an uintptr_t that can be used as and offset to access your physical addresses.
 
