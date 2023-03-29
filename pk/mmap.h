@@ -36,6 +36,7 @@ uintptr_t do_mprotect(uintptr_t addr, size_t length, int prot);
 uintptr_t do_brk(uintptr_t addr);
 
 uintptr_t map_phys_memory(uintptr_t paddr, long len);
+uintptr_t get_paddr(uintptr_t vaddr, long size);
 
 #define KVA_START ((uintptr_t)-1 << (VA_BITS-1))
 
