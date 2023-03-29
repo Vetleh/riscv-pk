@@ -158,8 +158,9 @@ int sys_openat(int dirfd, const char *name, int flags, int mode)
       return PTR_ERR(file);
 
     int fd = file_dup(file);
-    file_decref(file); // counteract file_dup's file_incref
-    if (fd < 0) {
+    if (fd < 0)
+    {
+      file_decref(file);
       return -ENOMEM;
     }
 
@@ -678,20 +679,13 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, unsigned l
 
   const static void *old_syscall_table[] = {
       [-OLD_SYSCALL_THRESHOLD + SYS_open] = sys_open,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_link] = sys_link,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_unlink] = sys_unlink,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_mkdir] = sys_mkdir,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_access] = sys_access,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_stat] = sys_stat,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_lstat] = sys_lstat,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_time] = sys_time,
+      [-OLD_SYSCALL_THRESHOLD + SYS_link] = sys_link,
+      [-OLD_SYSCALL_THRESHOLD + SYS_unlink] = sys_unlink,
+      [-OLD_SYSCALL_THRESHOLD + SYS_mkdir] = sys_mkdir,
+      [-OLD_SYSCALL_THRESHOLD + SYS_access] = sys_access,
+      [-OLD_SYSCALL_THRESHOLD + SYS_stat] = sys_stat,
+      [-OLD_SYSCALL_THRESHOLD + SYS_lstat] = sys_lstat,
+      [-OLD_SYSCALL_THRESHOLD + SYS_time] = sys_time,
   };
 
   syscall_t f = 0;
@@ -702,7 +696,7 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, unsigned l
     f = old_syscall_table[n - OLD_SYSCALL_THRESHOLD];
 
   if (!f)
-    return sys_stub_nosys();
+    panic("bad syscall #%ld!", n);
 
   f = (void *)pa2kva(f);
 
