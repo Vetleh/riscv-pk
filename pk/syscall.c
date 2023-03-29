@@ -139,7 +139,9 @@ static int at_kfd(int dirfd)
   file_t *dir = file_get(dirfd);
   if (dir == NULL)
     return -1;
-  return dir->kfd;
+  int kfd = dir->kfd;
+  file_decref(dir);
+  return kfd;
 }
 
 int sys_openat(int dirfd, const char *name, int flags, int mode)
@@ -440,7 +442,7 @@ long sys_getcwd(char *buf, size_t size)
 {
   char kbuf[MAX_BUF];
   long ret = frontend_syscall(SYS_getcwd, kva2pa(kbuf), MIN(size, MAX_BUF), 0, 0, 0, 0, 0);
-  if (ret == 0)
+  if (ret > 0)
     memcpy_to_user(buf, kbuf, strlen(kbuf) + 1);
   return ret;
 }
@@ -677,20 +679,13 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, unsigned l
 
   const static void *old_syscall_table[] = {
       [-OLD_SYSCALL_THRESHOLD + SYS_open] = sys_open,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_link] = sys_link,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_unlink] = sys_unlink,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_mkdir] = sys_mkdir,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_access] = sys_access,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_stat] = sys_stat,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_lstat] = sys_lstat,
-      [-OLD_SYSCALL_THRESHOLD +
-          SYS_time] = sys_time,
+      [-OLD_SYSCALL_THRESHOLD + SYS_link] = sys_link,
+      [-OLD_SYSCALL_THRESHOLD + SYS_unlink] = sys_unlink,
+      [-OLD_SYSCALL_THRESHOLD + SYS_mkdir] = sys_mkdir,
+      [-OLD_SYSCALL_THRESHOLD + SYS_access] = sys_access,
+      [-OLD_SYSCALL_THRESHOLD + SYS_stat] = sys_stat,
+      [-OLD_SYSCALL_THRESHOLD + SYS_lstat] = sys_lstat,
+      [-OLD_SYSCALL_THRESHOLD + SYS_time] = sys_time,
   };
 
   syscall_t f = 0;
