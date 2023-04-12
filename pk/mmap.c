@@ -571,10 +571,8 @@ uintptr_t get_paddr(uintptr_t vaddr, long size)
   int offset_bits = vaddr & ((1 << RISCV_PGSHIFT) - 1);
   
   uintptr_t phys_addr = (*pte >> PTE_PPN_SHIFT) << RISCV_PGSHIFT;
-  printk(" phys_addr: %lx \n offset_bits: %lx \n", phys_addr, offset_bits);
+  
   return phys_addr + offset_bits;
-  // Return the physical address from the virtual address
-  // return (uintptr_t)kva2pa(vaddr);
 }
 
 void populate_mapping(const void* start, size_t size, int prot)
