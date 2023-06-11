@@ -619,6 +619,11 @@ static uintptr_t sys_get_paddr(uintptr_t vaddr, long size)
   return get_paddr(vaddr, size);
 }
 
+static void sys_walk_address(uintptr_t vaddr)
+{
+  walk_address(vaddr);
+}
+
 long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, unsigned long n)
 {
   const static void *syscall_table[] = {
@@ -675,6 +680,7 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, unsigned l
       [SYS_madvise] = sys_stub_nosys,
       [SYS_paddr_to_vaddr] = sys_fmem_to_vmem,
       [SYS_get_paddr] = sys_get_paddr,
+      [SYS_walk_addr] = sys_walk_address,
   };
 
   const static void *old_syscall_table[] = {

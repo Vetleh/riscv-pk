@@ -50,7 +50,7 @@ static void handle_option(const char* arg)
   }
 
   if (strcmp(arg, "--randomize-mapping") == 0) {
-    randomize_mapping = 1;
+    randomize_mapping = 0;
     return;
   }
 

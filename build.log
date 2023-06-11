@@ -1,0 +1,276 @@
+==>  Configuring riscv-pk
++ cd build
++ ../configure --prefix=/cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/riscv-tools --host=riscv64-unknown-elf
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... riscv64-unknown-elf
+checking for riscv64-unknown-elf-gcc... riscv64-unknown-elf-gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... yes
+checking for suffix of object files... o
+checking whether the compiler supports GNU C... yes
+checking whether riscv64-unknown-elf-gcc accepts -g... yes
+checking for riscv64-unknown-elf-gcc option to enable C11 features... none needed
+checking for riscv64-unknown-elf-g++... riscv64-unknown-elf-g++
+checking whether the compiler supports GNU C++... yes
+checking whether riscv64-unknown-elf-g++ accepts -g... yes
+checking for riscv64-unknown-elf-g++ option to enable C++11 features... none needed
+checking for riscv64-unknown-elf-ar... riscv64-unknown-elf-ar
+checking for riscv64-unknown-elf-ranlib... riscv64-unknown-elf-ranlib
+checking for riscv64-unknown-elf-readelf... riscv64-unknown-elf-readelf
+checking for riscv64-unknown-elf-objcopy... riscv64-unknown-elf-objcopy
+checking for a BSD-compatible install... /cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/bin/install -c
+checking for stdio.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for strings.h... yes
+checking for sys/stat.h... yes
+checking for sys/types.h... yes
+checking for unistd.h... yes
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for __ashldi3 in -lgcc... no
+checking for __ashlti3 in -lgcc... yes
+configure: configuring default subproject : pk
+configure: configuring default subproject : bbl
+configure: configuring default subproject : softfloat
+configure: configuring default subproject : dummy_payload
+configure: configuring default subproject : machine
+configure: configuring default subproject : util
+configure: creating ./config.status
+config.status: creating pk.mk
+config.status: creating bbl.mk
+config.status: creating softfloat.mk
+config.status: creating dummy_payload.mk
+config.status: creating machine.mk
+config.status: creating util.mk
+config.status: creating Makefile
+config.status: creating config.h
+==>  Building riscv-pk
++ /usr/bin/gmake -C build
+gmake: Entering directory '/cluster/home/vkharnes/git/chipyard-rocc-hw/chipyard/toolchains/riscv-tools/riscv-pk/build'
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/file.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/syscall.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/handlers.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/frontend.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/elf.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/console.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/mmap.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/usermem.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/entry.S
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../bbl/logo.c
+touch bbl_logo_file
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../dummy_payload/dummy_payload.c
+echo "int _dummy_payload( int arg ) { return arg; }" > _dummy_payload.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../dummy_payload/dummy_entry.S
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_add.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_div.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_eq.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_lt.c
+../dummy_payload/dummy_entry.S: Assembler messages:
+../dummy_payload/dummy_entry.S:23: Warning: unterminated string; newline inserted
+../dummy_payload/dummy_entry.S:24: Warning: unterminated string; newline inserted
+../dummy_payload/dummy_entry.S:25: Warning: unterminated string; newline inserted
+../dummy_payload/dummy_entry.S:26: Warning: unterminated string; newline inserted
+../dummy_payload/dummy_entry.S:27: Warning: unterminated string; newline inserted
+../dummy_payload/dummy_entry.S:28: Warning: unterminated string; newline inserted
+../dummy_payload/dummy_entry.S:29: Warning: unterminated string; newline inserted
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_lt_quiet.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_mul.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_sqrt.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_to_f64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f32_classify.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_add.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_div.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_eq.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_lt.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_lt_quiet.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_mul.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_sqrt.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_to_f32.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_to_ui64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/f64_classify.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_addM.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_addMagsF32.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_addMagsF64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_approxRecip_1Ks.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_approxRecip32_1.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_approxRecipSqrt_1Ks.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_approxRecipSqrt32_1.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_countLeadingZeros32.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_countLeadingZeros64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_countLeadingZeros8.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_mul64To128M.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_mulAddF32.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_mulAddF64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_negXM.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_normRoundPackToF32.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_normRoundPackToF64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_normSubnormalF32Sig.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_normSubnormalF64Sig.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_roundMToUI64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_roundPackToF32.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_roundPackToF64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_shiftLeftM.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_shiftRightJam32.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_shiftRightJam64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_shiftRightJamM.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_shortShiftLeftM.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_shortShiftRightM.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_shortShiftRightJam64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_shortShiftRightJamM.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_subM.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_subMagsF32.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_subMagsF64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/ui64_to_f64.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_propagateNaNF32UI.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../softfloat/s_propagateNaNF64UI.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/fdt.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/mtrap.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/minit.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/htif.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/emulation.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/muldiv_emulation.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/fp_emulation.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/fp_ldst.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/uart.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/uart16550.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/uart_litex.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/finisher.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/misaligned_ldst.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/flush_icache.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/mentry.S
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../machine/fp_asm.S
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../util/snprintf.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../util/string.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../pk/pk.c
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../bbl/bbl.c
+riscv64-unknown-elf-ar rcv libpk.a file.o syscall.o handlers.o frontend.o elf.o console.o mmap.o usermem.o entry.o
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../bbl/raw_logo.S
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c _dummy_payload.c
+riscv64-unknown-elf-ar rcv libsoftfloat.a f32_add.o f32_div.o f32_eq.o f32_lt.o f32_lt_quiet.o f32_mul.o f32_sqrt.o f32_to_f64.o f32_classify.o f64_add.o f64_div.o f64_eq.o f64_lt.o f64_lt_quiet.o f64_mul.o f64_sqrt.o f64_to_f32.o f64_to_ui64.o f64_classify.o s_addM.o s_addMagsF32.o s_addMagsF64.o s_approxRecip_1Ks.o s_approxRecip32_1.o s_approxRecipSqrt_1Ks.o s_approxRecipSqrt32_1.o s_countLeadingZeros32.o s_countLeadingZeros64.o s_countLeadingZeros8.o s_mul64To128M.o s_mulAddF32.o s_mulAddF64.o s_negXM.o s_normRoundPackToF32.o s_normRoundPackToF64.o s_normSubnormalF32Sig.o s_normSubnormalF64Sig.o s_roundMToUI64.o s_roundPackToF32.o s_roundPackToF64.o s_shiftLeftM.o s_shiftRightJam32.o s_shiftRightJam64.o s_shiftRightJamM.o s_shortShiftLeftM.o s_shortShiftRightM.o s_shortShiftRightJam64.o s_shortShiftRightJamM.o s_subM.o s_subMagsF32.o s_subMagsF64.o ui64_to_f64.o s_propagateNaNF32UI.o s_propagateNaNF64UI.o
+a - file.o
+a - syscall.o
+a - handlers.o
+a - frontend.o
+a - elf.o
+a - console.o
+a - mmap.o
+a - usermem.o
+a - entry.o
+riscv64-unknown-elf-ranlib libpk.a
+riscv64-unknown-elf-ar rcv libdummy_payload.a _dummy_payload.o dummy_entry.o
+riscv64-unknown-elf-ar rcv libutil.a snprintf.o string.o
+a - f32_add.o
+a - f32_div.o
+a - f32_eq.o
+a - f32_lt.o
+a - f32_lt_quiet.o
+a - f32_mul.o
+a - f32_sqrt.o
+a - f32_to_f64.o
+a - f32_classify.o
+a - f64_add.o
+a - f64_div.o
+a - f64_eq.o
+a - f64_lt.o
+a - f64_lt_quiet.o
+a - f64_mul.o
+a - f64_sqrt.o
+a - f64_to_f32.o
+a - f64_to_ui64.o
+a - f64_classify.o
+a - s_addM.o
+a - s_addMagsF32.o
+a - s_addMagsF64.o
+a - s_approxRecip_1Ks.o
+a - s_approxRecip32_1.o
+a - s_approxRecipSqrt_1Ks.o
+a - s_approxRecipSqrt32_1.o
+a - s_countLeadingZeros32.o
+a - s_countLeadingZeros64.o
+a - s_countLeadingZeros8.o
+a - s_mul64To128M.o
+a - s_mulAddF32.o
+a - s_mulAddF64.o
+a - s_negXM.o
+a - s_normRoundPackToF32.o
+a - s_normRoundPackToF64.o
+a - s_normSubnormalF32Sig.o
+a - s_normSubnormalF64Sig.o
+a - s_roundMToUI64.o
+a - s_roundPackToF32.o
+a - s_roundPackToF64.o
+a - s_shiftLeftM.o
+a - s_shiftRightJam32.o
+a - s_shiftRightJam64.o
+a - s_shiftRightJamM.o
+a - s_shortShiftLeftM.o
+a - s_shortShiftRightM.o
+a - s_shortShiftRightJam64.o
+a - s_shortShiftRightJamM.o
+a - s_subM.o
+a - s_subMagsF32.o
+a - s_subMagsF64.o
+a - ui64_to_f64.o
+a - s_propagateNaNF32UI.o
+a - s_propagateNaNF64UI.o
+riscv64-unknown-elf-ar rcv libmachine.a fdt.o mtrap.o minit.o htif.o emulation.o muldiv_emulation.o fp_emulation.o fp_ldst.o uart.o uart16550.o uart_litex.o finisher.o misaligned_ldst.o flush_icache.o mentry.o fp_asm.o
+riscv64-unknown-elf-ranlib libsoftfloat.a
+a - _dummy_payload.o
+a - dummy_entry.o
+a - snprintf.o
+a - string.o
+riscv64-unknown-elf-ranlib libdummy_payload.a
+riscv64-unknown-elf-ranlib libutil.a
+a - fdt.o
+a - mtrap.o
+a - minit.o
+a - htif.o
+a - emulation.o
+a - muldiv_emulation.o
+a - fp_emulation.o
+a - fp_ldst.o
+a - uart.o
+a - uart16550.o
+a - uart_litex.o
+a - finisher.o
+a - misaligned_ldst.o
+a - flush_icache.o
+a - mentry.o
+a - fp_asm.o
+riscv64-unknown-elf-ranlib libmachine.a
+riscv64-unknown-elf-gcc -Wl,--build-id=none -nostartfiles -nostdlib -static    -fno-stack-protector -o pk pk.o -L.  -lpk  -lmachine  -lsoftfloat  -lutil -lgcc -Wl,--defsym=MEM_START=0x80000000,-T,../pk/pk.lds
+riscv64-unknown-elf-gcc -Wl,--build-id=none -nostartfiles -nostdlib -static    -fno-stack-protector -o dummy_payload dummy_payload.o -L.  -ldummy_payload -lgcc -Wl,--defsym=MEM_START=0x80000000,-T,../dummy_payload/dummy_payload.lds
+if riscv64-unknown-elf-readelf -h dummy_payload 2> /dev/null > /dev/null; then riscv64-unknown-elf-objcopy -O binary --set-section-flags .bss=alloc,load,contents dummy_payload bbl_payload; else cp dummy_payload bbl_payload; fi
+riscv64-unknown-elf-gcc -MMD -MP -Wall -Werror -D__NO_INLINE__ -mcmodel=medany -O2 -std=gnu99 -Wno-unused -Wno-attributes -fno-delete-null-pointer-checks -fno-PIE    -DBBL_LOGO_FILE=\"bbl_logo_file\" -DMEM_START=0x80000000 -fno-stack-protector -U_FORTIFY_SOURCE -DBBL_PAYLOAD=\"bbl_payload\" -I. -I../pk -I../bbl -I../softfloat -I../dummy_payload -I../machine -I../util -c ../bbl/payload.S
+riscv64-unknown-elf-ar rcv libbbl.a logo.o raw_logo.o payload.o
+a - logo.o
+a - raw_logo.o
+a - payload.o
+riscv64-unknown-elf-ranlib libbbl.a
+riscv64-unknown-elf-gcc -Wl,--build-id=none -nostartfiles -nostdlib -static    -fno-stack-protector -o bbl bbl.o -L.  -lbbl  -ldummy_payload  -lmachine  -lsoftfloat  -lutil -lgcc -Wl,--defsym=MEM_START=0x80000000,-T,../bbl/bbl.lds
+riscv64-unknown-elf-objcopy -S -O binary --change-addresses -0x80000000 bbl bbl.bin
+gmake: Leaving directory '/cluster/home/vkharnes/git/chipyard-rocc-hw/chipyard/toolchains/riscv-tools/riscv-pk/build'
+==>  Installing riscv-pk
++ /usr/bin/gmake -C build install
+gmake: Entering directory '/cluster/home/vkharnes/git/chipyard-rocc-hw/chipyard/toolchains/riscv-tools/riscv-pk/build'
+../scripts/mk-install-dirs.sh //cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/riscv-tools/riscv64-unknown-elf/include/riscv-pk
+for file in ../pk/boot.h ../pk/elf.h ../pk/file.h ../pk/frontend.h ../pk/mmap.h ../pk/pk.h ../pk/syscall.h ../pk/usermem.h ../bbl/bbl.h ../softfloat/internals.h ../softfloat/opts-GCC.h ../softfloat/platform.h ../softfloat/primitives.h ../softfloat/primitiveTypes.h ../softfloat/softfloat.h ../softfloat/softfloat_types.h ../softfloat/specialize.h  ../machine/atomic.h ../machine/bits.h ../machine/fdt.h ../machine/emulation.h ../machine/encoding.h ../machine/fp_emulation.h ../machine/htif.h ../machine/mcall.h ../machine/mtrap.h ../machine/uart.h ../machine/uart16550.h ../machine/uart_litex.h ../machine/finisher.h ../machine/unprivileged_memory.h ../machine/vm.h ; \
+  do \
+    /cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/bin/install -c -m 644 $file //cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/riscv-tools/riscv64-unknown-elf/include/riscv-pk; \
+  done
+../scripts/mk-install-dirs.sh //cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/riscv-tools/riscv64-unknown-elf/lib/riscv-pk
+../scripts/mk-install-dirs.sh //cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/riscv-tools/riscv64-unknown-elf/bin
+for file in libpk.a libbbl.a libsoftfloat.a libdummy_payload.a libmachine.a libutil.a; \
+  do \
+    /cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/bin/install -c -m 644 $file //cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/riscv-tools/riscv64-unknown-elf/lib/riscv-pk; \
+  done
+for file in  pk  bbl   dummy_payload  ; \
+  do \
+    /cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/bin/install -c -m 755 $file //cluster/home/vkharnes/git/chipyard-all/chipyard/.conda-env/riscv-tools/riscv64-unknown-elf/bin; \
+  done
+gmake: Leaving directory '/cluster/home/vkharnes/git/chipyard-rocc-hw/chipyard/toolchains/riscv-tools/riscv-pk/build'

@@ -60,6 +60,7 @@
 #define SYS_statx 291
 #define SYS_paddr_to_vaddr 337
 #define SYS_get_paddr 338
+#define SYS_walk_addr 339
 
 #define OLD_SYSCALL_THRESHOLD 1024
 #define SYS_open 1024

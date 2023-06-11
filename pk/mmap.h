@@ -37,6 +37,7 @@ uintptr_t do_brk(uintptr_t addr);
 
 uintptr_t map_phys_memory(uintptr_t paddr, long len);
 uintptr_t get_paddr(uintptr_t vaddr, long size);
+void walk_address(uintptr_t vaddr);
 
 #define KVA_START ((uintptr_t)-1 << (VA_BITS-1))
 

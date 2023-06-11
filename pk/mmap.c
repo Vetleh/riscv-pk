@@ -12,19 +12,20 @@
 
 uintptr_t kva2pa_offset;
 
-typedef struct vmr_t {
-  struct vmr_t* next;
+typedef struct vmr_t
+{
+  struct vmr_t *next;
   uintptr_t addr;
   size_t length;
-  file_t* file;
+  file_t *file;
   size_t offset;
   unsigned refcnt;
   int prot;
 } vmr_t;
 
-static vmr_t* vmr_freelist_head;
+static vmr_t *vmr_freelist_head;
 
-static pte_t* root_page_table;
+static pte_t *root_page_table;
 
 #define RISCV_PGLEVELS ((VA_BITS - RISCV_PGSHIFT) / RISCV_PGLEVEL_BITS)
 
@@ -35,15 +36,16 @@ static size_t next_free_page;
 static size_t free_pages;
 static size_t pages_promised;
 
-int demand_paging = 1; // unless -p flag is given
+int demand_paging = 1;      // unless -p flag is given
 uint64_t randomize_mapping; // set by --randomize-mapping
 
-typedef struct freelist_node_t {
+typedef struct freelist_node_t
+{
   uintptr_t addr;
 } freelist_node_t;
 
 size_t page_freelist_depth;
-static freelist_node_t* page_freelist_storage;
+static freelist_node_t *page_freelist_storage;
 
 static uintptr_t free_page_addr(size_t idx)
 {
@@ -88,8 +90,9 @@ static freelist_node_t __page_freelist_remove()
 static bool __augment_page_freelist()
 {
   uintptr_t page = __early_alloc(RISCV_PGSIZE);
-  if (page != 0) {
-    freelist_node_t node = { .addr = page };
+  if (page != 0)
+  {
+    freelist_node_t node = {.addr = page};
     __page_freelist_insert(node);
   }
   return page;
@@ -97,14 +100,16 @@ static bool __augment_page_freelist()
 
 static void __maybe_fuzz_page_freelist()
 {
-  if (randomize_mapping) {
+  if (randomize_mapping)
+  {
     randomize_mapping = lfsr63(randomize_mapping);
 
-    if (randomize_mapping % 2 == 0 && page_freelist_depth) {
+    if (randomize_mapping % 2 == 0 && page_freelist_depth)
+    {
       size_t swap_idx = randomize_mapping % page_freelist_depth;
       freelist_node_t tmp = page_freelist_storage[swap_idx];
-      page_freelist_storage[swap_idx] = page_freelist_storage[page_freelist_depth-1];
-      page_freelist_storage[page_freelist_depth-1] = tmp;
+      page_freelist_storage[swap_idx] = page_freelist_storage[page_freelist_depth - 1];
+      page_freelist_storage[page_freelist_depth - 1] = tmp;
     }
 
     if (randomize_mapping % 16 == 0)
@@ -129,7 +134,7 @@ static uintptr_t __page_alloc()
 
   freelist_node_t node = __page_freelist_remove();
 
-  memset((void*)pa2kva(node.addr), 0, RISCV_PGSIZE);
+  memset((void *)pa2kva(node.addr), 0, RISCV_PGSIZE);
 
   return node.addr;
 }
@@ -146,25 +151,26 @@ static uintptr_t __page_alloc_assert()
 
 static void __page_free(uintptr_t addr)
 {
-  freelist_node_t node = { .addr = addr };
+  freelist_node_t node = {.addr = addr};
   __page_freelist_insert(node);
 }
 
-static vmr_t* __vmr_alloc(uintptr_t addr, size_t length, file_t* file,
+static vmr_t *__vmr_alloc(uintptr_t addr, size_t length, file_t *file,
                           size_t offset, unsigned refcnt, int prot)
 {
-  if (vmr_freelist_head == NULL) {
-    vmr_t* new_vmrs = (vmr_t*)pa2kva(__page_alloc());
+  if (vmr_freelist_head == NULL)
+  {
+    vmr_t *new_vmrs = (vmr_t *)pa2kva(__page_alloc());
     if (new_vmrs == NULL)
       return NULL;
 
     vmr_freelist_head = new_vmrs;
 
     for (size_t i = 0; i < (RISCV_PGSIZE / sizeof(vmr_t)) - 1; i++)
-      new_vmrs[i].next = &new_vmrs[i+1];
+      new_vmrs[i].next = &new_vmrs[i + 1];
   }
 
-  vmr_t* v = vmr_freelist_head;
+  vmr_t *v = vmr_freelist_head;
   vmr_freelist_head = v->next;
 
   pages_promised += refcnt;
@@ -181,11 +187,12 @@ static vmr_t* __vmr_alloc(uintptr_t addr, size_t length, file_t* file,
   return v;
 }
 
-static void __vmr_decref(vmr_t* v, unsigned dec)
+static void __vmr_decref(vmr_t *v, unsigned dec)
 {
   pages_promised -= dec;
 
-  if ((v->refcnt -= dec) == 0) {
+  if ((v->refcnt -= dec) == 0)
+  {
     if (v->file)
       file_decref(v->file);
 
@@ -206,51 +213,57 @@ static uintptr_t ppn(uintptr_t addr)
 
 static size_t pt_idx(uintptr_t addr, int level)
 {
-  size_t idx = addr >> (RISCV_PGLEVEL_BITS*level + RISCV_PGSHIFT);
+  size_t idx = addr >> (RISCV_PGLEVEL_BITS * level + RISCV_PGSHIFT);
   return idx & ((1 << RISCV_PGLEVEL_BITS) - 1);
 }
 
-static inline pte_t* __walk_internal(pte_t* t, uintptr_t addr, int create, int level)
+static inline pte_t *__walk_internal(pte_t *t, uintptr_t addr, int create, int level)
 {
-  for (int i = RISCV_PGLEVELS - 1; i > level; i--) {
+  for (int i = RISCV_PGLEVELS - 1; i > level; i--)
+  {
     size_t idx = pt_idx(addr, i);
-    if (unlikely(!(t[idx] & PTE_V))) {
-      if (create) {
+    if (unlikely(!(t[idx] & PTE_V)))
+    {
+      if (create)
+      {
         uintptr_t new_ptd = __page_alloc();
         if (!new_ptd)
           return 0;
         t[idx] = ptd_create(ppn(new_ptd));
-      } else {
+      }
+      else
+      {
         return 0;
       }
     }
-    t = (pte_t*)pa2kva(pte_ppn(t[idx]) << RISCV_PGSHIFT);
+    t = (pte_t *)pa2kva(pte_ppn(t[idx]) << RISCV_PGSHIFT);
   }
   return &t[pt_idx(addr, level)];
 }
 
-static pte_t* __walk(uintptr_t addr)
+static pte_t *__walk(uintptr_t addr)
 {
   return __walk_internal(root_page_table, addr, 0, 0);
 }
 
-static pte_t* __walk_create(uintptr_t addr)
+static pte_t *__walk_create(uintptr_t addr)
 {
   return __walk_internal(root_page_table, addr, 1, 0);
 }
 
 static int __va_avail(uintptr_t vaddr)
 {
-  pte_t* pte = __walk(vaddr);
+  pte_t *pte = __walk(vaddr);
   return pte == 0 || *pte == 0;
 }
 
 static uintptr_t __vm_alloc_at(uintptr_t start, uintptr_t end, size_t npage)
 {
-  for (uintptr_t a = start; a <= end; a += RISCV_PGSIZE) {
+  for (uintptr_t a = start; a <= end; a += RISCV_PGSIZE)
+  {
     if (!__va_avail(a))
       continue;
-    uintptr_t first = a, last = a + (npage-1) * RISCV_PGSIZE;
+    uintptr_t first = a, last = a + (npage - 1) * RISCV_PGSIZE;
     for (a = last; a > first && __va_avail(a); a -= RISCV_PGSIZE)
       ;
     if (a > first)
@@ -263,7 +276,8 @@ static uintptr_t __vm_alloc_at(uintptr_t start, uintptr_t end, size_t npage)
 static uintptr_t __vm_alloc(size_t npage)
 {
   uintptr_t end = current.mmap_max - npage * RISCV_PGSIZE;
-  if (current.vm_alloc_guess) {
+  if (current.vm_alloc_guess)
+  {
     uintptr_t ret = __vm_alloc_at(current.vm_alloc_guess, end, npage);
     if (ret)
       return ret;
@@ -275,11 +289,16 @@ static uintptr_t __vm_alloc(size_t npage)
 static inline pte_t prot_to_type(int prot, int user)
 {
   pte_t pte = 0;
-  if (prot & PROT_READ) pte |= PTE_R | PTE_A;
-  if (prot & PROT_WRITE) pte |= PTE_W | PTE_D;
-  if (prot & PROT_EXEC) pte |= PTE_X | PTE_A;
-  if (pte == 0) pte = PTE_R;
-  if (user) pte |= PTE_U;
+  if (prot & PROT_READ)
+    pte |= PTE_R | PTE_A;
+  if (prot & PROT_WRITE)
+    pte |= PTE_W | PTE_D;
+  if (prot & PROT_EXEC)
+    pte |= PTE_X | PTE_A;
+  if (pte == 0)
+    pte = PTE_R;
+  if (user)
+    pte |= PTE_U;
   return pte;
 }
 
@@ -293,7 +312,10 @@ int __valid_user_range(uintptr_t vaddr, size_t len)
 
 static void flush_tlb_entry(uintptr_t vaddr)
 {
-  asm volatile ("sfence.vma %0" : : "r" (vaddr) : "memory");
+  asm volatile("sfence.vma %0"
+               :
+               : "r"(vaddr)
+               : "memory");
 }
 
 static int __handle_page_fault(uintptr_t vaddr, int prot)
@@ -301,7 +323,7 @@ static int __handle_page_fault(uintptr_t vaddr, int prot)
   uintptr_t vpn = vaddr >> RISCV_PGSHIFT;
   vaddr = vpn << RISCV_PGSHIFT;
 
-  pte_t* pte = __walk(vaddr);
+  pte_t *pte = __walk(vaddr);
 
   if (pte == 0 || *pte == 0 || !__valid_user_range(vaddr, 1))
     return -1;
@@ -310,16 +332,16 @@ static int __handle_page_fault(uintptr_t vaddr, int prot)
     uintptr_t ppn = __page_alloc_assert() / RISCV_PGSIZE;
     uintptr_t kva = pa2kva(ppn * RISCV_PGSIZE);
 
-    vmr_t* v = (vmr_t*)*pte;
-    *pte = pte_create(ppn, prot_to_type(PROT_READ|PROT_WRITE, 0));
+    vmr_t *v = (vmr_t *)*pte;
+    *pte = pte_create(ppn, prot_to_type(PROT_READ | PROT_WRITE, 0));
     flush_tlb_entry(vaddr);
     if (v->file)
     {
       size_t flen = MIN(RISCV_PGSIZE, v->length - (vaddr - v->addr));
-      ssize_t ret = file_pread(v->file, (void*)kva, flen, vaddr - v->addr + v->offset);
+      ssize_t ret = file_pread(v->file, (void *)kva, flen, vaddr - v->addr + v->offset);
       kassert(ret > 0);
       if (ret < RISCV_PGSIZE)
-        memset((void*)vaddr + ret, 0, RISCV_PGSIZE - ret);
+        memset((void *)vaddr + ret, 0, RISCV_PGSIZE - ret);
     }
     __vmr_decref(v, 1);
     *pte = pte_create(ppn, prot_to_type(v->prot, 1));
@@ -336,7 +358,7 @@ static int __handle_page_fault(uintptr_t vaddr, int prot)
 int handle_page_fault(uintptr_t vaddr, int prot)
 {
   spinlock_lock(&vm_lock);
-    int ret = __handle_page_fault(vaddr, prot);
+  int ret = __handle_page_fault(vaddr, prot);
   spinlock_unlock(&vm_lock);
   return ret;
 }
@@ -345,42 +367,47 @@ static void __do_munmap(uintptr_t addr, size_t len)
 {
   for (uintptr_t a = addr; a < addr + len; a += RISCV_PGSIZE)
   {
-    pte_t* pte = __walk(a);
+    pte_t *pte = __walk(a);
     if (pte == 0 || *pte == 0)
       continue;
-
+    // TODO THIS IS NOT OPTIMAL TO SAY IT THE LEAST, MEMORY LEAK
     if (*pte & PTE_V)
-      __page_free(pte_ppn(*pte) << RISCV_PGSHIFT);
-    else
-      __vmr_decref((vmr_t*)*pte, 1);
+    {
+      //   __page_free(pte_ppn(*pte) << RISCV_PGSHIFT);
+    }
+
+    else{
+       //__vmr_decref((vmr_t *)*pte, 1);
+    }
+
 
     *pte = 0;
     flush_tlb_entry(a);
   }
 }
 
-uintptr_t __do_mmap(uintptr_t addr, size_t length, int prot, int flags, file_t* f, off_t offset)
+uintptr_t __do_mmap(uintptr_t addr, size_t length, int prot, int flags, file_t *f, off_t offset)
 {
-  size_t npage = (length-1)/RISCV_PGSIZE+1;
+  size_t npage = (length - 1) / RISCV_PGSIZE + 1;
 
   if (npage * 17 / 16 + 16 + pages_promised >= __num_free_pages())
     return (uintptr_t)-1;
 
   if (flags & MAP_FIXED)
   {
-    if ((addr & (RISCV_PGSIZE-1)) || !__valid_user_range(addr, length))
+    if ((addr & (RISCV_PGSIZE - 1)) || !__valid_user_range(addr, length))
       return (uintptr_t)-1;
   }
   else if ((addr = __vm_alloc(npage)) == 0)
     return (uintptr_t)-1;
 
-  vmr_t* v = __vmr_alloc(addr, length, f, offset, npage, prot);
+  vmr_t *v = __vmr_alloc(addr, length, f, offset, npage, prot);
   if (!v)
     return (uintptr_t)-1;
 
   for (uintptr_t a = addr; a < addr + length; a += RISCV_PGSIZE)
   {
-    pte_t* pte = __walk_create(a);
+    pte_t *pte = __walk_create(a);
     kassert(pte);
 
     if (*pte)
@@ -400,11 +427,11 @@ uintptr_t __do_mmap(uintptr_t addr, size_t length, int prot, int flags, file_t* 
 
 int do_munmap(uintptr_t addr, size_t length)
 {
-  if ((addr & (RISCV_PGSIZE-1)) || !__valid_user_range(addr, length))
+  if ((addr & (RISCV_PGSIZE - 1)) || !__valid_user_range(addr, length))
     return -EINVAL;
 
   spinlock_lock(&vm_lock);
-    __do_munmap(addr, length);
+  __do_munmap(addr, length);
   spinlock_unlock(&vm_lock);
 
   return 0;
@@ -412,21 +439,22 @@ int do_munmap(uintptr_t addr, size_t length)
 
 uintptr_t do_mmap(uintptr_t addr, size_t length, int prot, int flags, int fd, off_t offset)
 {
-  if (!(flags & MAP_PRIVATE) || length == 0 || (offset & (RISCV_PGSIZE-1)))
+  if (!(flags & MAP_PRIVATE) || length == 0 || (offset & (RISCV_PGSIZE - 1)))
     return -EINVAL;
 
-  file_t* f = NULL;
+  file_t *f = NULL;
   if (!(flags & MAP_ANONYMOUS) && (f = file_get(fd)) == NULL)
     return -EBADF;
 
   spinlock_lock(&vm_lock);
-    addr = __do_mmap(addr, length, prot, flags, f, offset);
+  addr = __do_mmap(addr, length, prot, flags, f, offset);
 
-    if (addr < current.brk_max)
-      current.brk_max = addr;
+  if (addr < current.brk_max)
+    current.brk_max = addr;
   spinlock_unlock(&vm_lock);
 
-  if (f) file_decref(f);
+  if (f)
+    file_decref(f);
   return addr;
 }
 
@@ -442,10 +470,13 @@ uintptr_t __do_brk(size_t addr)
     current.brk = ROUNDUP(current.brk_min, RISCV_PGSIZE);
 
   uintptr_t newbrk_page = ROUNDUP(newbrk, RISCV_PGSIZE);
-  if (current.brk > newbrk_page) {
+  if (current.brk > newbrk_page)
+  {
     __do_munmap(newbrk_page, current.brk - newbrk_page);
-  } else if (current.brk < newbrk_page) {
-    if (__do_mmap(current.brk, newbrk_page - current.brk, -1, MAP_FIXED|MAP_PRIVATE|MAP_ANONYMOUS, 0, 0) != current.brk)
+  }
+  else if (current.brk < newbrk_page)
+  {
+    if (__do_mmap(current.brk, newbrk_page - current.brk, -1, MAP_FIXED | MAP_PRIVATE | MAP_ANONYMOUS, 0, 0) != current.brk)
       return current.brk;
   }
   current.brk = newbrk_page;
@@ -456,9 +487,9 @@ uintptr_t __do_brk(size_t addr)
 uintptr_t do_brk(size_t addr)
 {
   spinlock_lock(&vm_lock);
-    addr = __do_brk(addr);
+  addr = __do_brk(addr);
   spinlock_unlock(&vm_lock);
-  
+
   return addr;
 }
 
@@ -470,40 +501,46 @@ uintptr_t do_mremap(uintptr_t addr, size_t old_size, size_t new_size, int flags)
 uintptr_t do_mprotect(uintptr_t addr, size_t length, int prot)
 {
   uintptr_t res = 0;
-  if ((addr) & (RISCV_PGSIZE-1))
+  if ((addr) & (RISCV_PGSIZE - 1))
     return -EINVAL;
 
   spinlock_lock(&vm_lock);
-    for (uintptr_t a = addr; a < addr + length; a += RISCV_PGSIZE)
+  for (uintptr_t a = addr; a < addr + length; a += RISCV_PGSIZE)
+  {
+    pte_t *pte = __walk(a);
+    if (pte == 0 || *pte == 0)
     {
-      pte_t* pte = __walk(a);
-      if (pte == 0 || *pte == 0) {
-        res = -ENOMEM;
+      res = -ENOMEM;
+      break;
+    }
+
+    if (!(*pte & PTE_V))
+    {
+      vmr_t *v = (vmr_t *)*pte;
+      if ((v->prot ^ prot) & ~v->prot)
+      {
+        // TODO:look at file to find perms
+        res = -EACCES;
         break;
       }
-  
-      if (!(*pte & PTE_V)) {
-        vmr_t* v = (vmr_t*)*pte;
-        if((v->prot ^ prot) & ~v->prot){
-          //TODO:look at file to find perms
-          res = -EACCES;
-          break;
-        }
-        v->prot = prot;
-      } else {
-        if (!(*pte & PTE_U) ||
-            ((prot & PROT_READ) && !(*pte & PTE_R)) ||
-            ((prot & PROT_WRITE) && !(*pte & PTE_W)) ||
-            ((prot & PROT_EXEC) && !(*pte & PTE_X))) {
-          //TODO:look at file to find perms
-          res = -EACCES;
-          break;
-        }
-        *pte = pte_create(pte_ppn(*pte), prot_to_type(prot, 1));
-      }
-
-      flush_tlb_entry(a);
+      v->prot = prot;
     }
+    else
+    {
+      if (!(*pte & PTE_U) ||
+          ((prot & PROT_READ) && !(*pte & PTE_R)) ||
+          ((prot & PROT_WRITE) && !(*pte & PTE_W)) ||
+          ((prot & PROT_EXEC) && !(*pte & PTE_X)))
+      {
+        // TODO:look at file to find perms
+        res = -EACCES;
+        break;
+      }
+      *pte = pte_create(pte_ppn(*pte), prot_to_type(prot, 1));
+    }
+
+    flush_tlb_entry(a);
+  }
   spinlock_unlock(&vm_lock);
 
   return res;
@@ -511,7 +548,7 @@ uintptr_t do_mprotect(uintptr_t addr, size_t length, int prot)
 
 static inline void __map_kernel_page(uintptr_t vaddr, uintptr_t paddr, int level, int prot)
 {
-  pte_t* pte = __walk_internal(root_page_table, vaddr, 1, level);
+  pte_t *pte = __walk_internal(root_page_table, vaddr, 1, level);
   kassert(pte);
   *pte = pte_create(paddr >> RISCV_PGSHIFT, prot_to_type(prot, 0));
 }
@@ -524,7 +561,8 @@ static void __map_kernel_range(uintptr_t vaddr, uintptr_t paddr, size_t len, int
   // could support misaligned mappings, but no need today
   kassert((vaddr | paddr | len) % megapage_size == 0);
 
-  while (len > 0) {
+  while (len > 0)
+  {
     __map_kernel_page(vaddr, paddr, 1, prot);
 
     len -= megapage_size;
@@ -539,13 +577,14 @@ uintptr_t map_phys_memory(uintptr_t paddr, long size)
   size_t npage = (size - 1) / RISCV_PGSIZE + 1;
   size_t megapage_size = RISCV_PGSIZE;
 
-  uintptr_t vaddr = __vm_alloc(npage); 
+  uintptr_t vaddr = __vm_alloc(npage);
 
   uintptr_t temp_vaddr = vaddr;
   // Syscall is long, hence the address will be
   uintptr_t offset_paddr = ((paddr << 32) >> 32);
-  while (size > 0) {
-    pte_t* pte = __walk_create(temp_vaddr);
+  while (size > 0)
+  {
+    pte_t *pte = __walk_create(temp_vaddr);
     kassert(pte);
     *pte = pte_create(offset_paddr >> RISCV_PGSHIFT, prot_to_type(prot, 1));
 
@@ -553,37 +592,66 @@ uintptr_t map_phys_memory(uintptr_t paddr, long size)
     temp_vaddr += megapage_size;
     offset_paddr += megapage_size;
   }
-  
+
   current.vm_alloc_guess = vaddr + npage * RISCV_PGSIZE;
-  
+  if (vaddr < current.brk_max)
+    current.brk_max = vaddr;
   return vaddr;
 }
 
+void walk_address(uintptr_t vaddr){
+  pte_t *pte = __walk(vaddr);
+  printk("pte: %lx\n *pte: %lx\n &pte: %lx", pte, *pte, &pte);
+}
+
 uintptr_t get_paddr(uintptr_t vaddr, long size)
-{ 
+{
   // Check if vaddr is a valid addr
-  if(__va_avail(vaddr)){
+  if (__va_avail(vaddr))
+  {
     return -1;
   }
-  pte_t * pte = __walk(vaddr);
   // TODO use this function for PTE_PPN_SHIFT as it is more tidy
   // pte_ppn(pte pte)
+  pte_t *temp_pte = __walk(vaddr);
+  uintptr_t last_phys_addr = (*temp_pte >> PTE_PPN_SHIFT) << RISCV_PGSHIFT;
+  uintptr_t curr_phys_addr = 0;
+  uintptr_t temp_vaddr = vaddr + RISCV_PGSIZE;
+  long temp_size = size - RISCV_PGSIZE;
+  while (temp_size > 0)
+  {
+    pte_t *temp_pte = __walk(temp_vaddr);
+    curr_phys_addr = (*temp_pte >> PTE_PPN_SHIFT) << RISCV_PGSHIFT;
+    if (curr_phys_addr == last_phys_addr + RISCV_PGSIZE)
+    {
+      last_phys_addr = curr_phys_addr;
+    }
+    else
+    {
+      printk("Memory is not continuous \n");
+      printk("Page before: %lx \nPage after: %lx \n", last_phys_addr, curr_phys_addr);
+      break;
+    }
+    temp_vaddr += RISCV_PGSIZE;
+    temp_size -= RISCV_PGSIZE;
+  }
+  
+  pte_t *pte = __walk(vaddr);
   int offset_bits = vaddr & ((1 << RISCV_PGSHIFT) - 1);
-  
+
   uintptr_t phys_addr = (*pte >> PTE_PPN_SHIFT) << RISCV_PGSHIFT;
-  
   return phys_addr + offset_bits;
 }
 
-void populate_mapping(const void* start, size_t size, int prot)
+void populate_mapping(const void *start, size_t size, int prot)
 {
   uintptr_t a0 = ROUNDDOWN((uintptr_t)start, RISCV_PGSIZE);
-  for (uintptr_t a = a0; a < (uintptr_t)start+size; a += RISCV_PGSIZE)
+  for (uintptr_t a = a0; a < (uintptr_t)start + size; a += RISCV_PGSIZE)
   {
     if (prot & PROT_WRITE)
-      atomic_add((int*)a, 0);
+      atomic_add((int *)a, 0);
     else
-      atomic_read((int*)a);
+      atomic_read((int *)a);
   }
 }
 
@@ -606,10 +674,10 @@ uintptr_t pk_vm_init()
   init_early_alloc();
 
   size_t num_freelist_nodes = mem_size / RISCV_PGSIZE;
-  page_freelist_storage = (freelist_node_t*)__early_alloc(num_freelist_nodes * sizeof(freelist_node_t));
+  page_freelist_storage = (freelist_node_t *)__early_alloc(num_freelist_nodes * sizeof(freelist_node_t));
 
-  root_page_table = (void*)__page_alloc_assert();
-  __map_kernel_range(KVA_START, MEM_START, mem_size, PROT_READ|PROT_WRITE|PROT_EXEC);
+  root_page_table = (void *)__page_alloc_assert();
+  __map_kernel_range(KVA_START, MEM_START, mem_size, PROT_READ | PROT_WRITE | PROT_EXEC);
 
   flush_tlb();
   write_csr(satp, ((uintptr_t)root_page_table >> RISCV_PGSHIFT) | SATP_MODE_CHOICE);
@@ -618,8 +686,8 @@ uintptr_t pk_vm_init()
 
   // relocate
   kva2pa_offset = KVA_START - MEM_START;
-  page_freelist_storage = (void*)pa2kva(page_freelist_storage);
-  root_page_table = (void*)pa2kva(root_page_table);
+  page_freelist_storage = (void *)pa2kva(page_freelist_storage);
+  root_page_table = (void *)pa2kva(root_page_table);
 
   return kernel_stack_top;
 }
